@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="ko">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge" /> -->
+    <title>Camera Web App</title>
+    <style>
+      /* html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #header {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        z-index: 999;
+        color: white;
+        text-align: center;
+        transform: translate(-50%, -50%);
+      }
+
+      #header > p {
+        font-size: 0.9em;
+      } */
+
+      #camera {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: -1;
+        object-fit: contain;
+      }
+      #camera--view {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: -1;
+        object-fit: contain;
+        /* transform: scaleX(-1); */
+        filter: FlipH;
+      }
+
+      #camera--trigger {
+        width: 180px;
+        color: white;
+        background-color: black;
+        font-size: 16px;
+        border-radius: 30px;
+        border: none;
+        padding: 15px 20px;
+        text-align: center;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0, 0.2);
+        position: fixed;
+        bottom: 3%;
+        left: calc(50% - 90px);
+      }
+      #camera--output {
+        object-fit: contain;
+        position: relative;
+      }
+      #rect {
+        /* width: 100px;
+        height: 100px; */
+        position: "absolute";
+        border: 5px solid red;
+        border-top-style: dashed;
+        border-right-style: dashed;
+        border-left-style: dashed;
+        border-bottom-style: dashed;
+        /* transform: translateX(calc(67%)); */
+      }
+
+      /* .taken {
+        height: 140px !important;
+        width: 220px !important;
+        border: solid 2px rgb(121, 200, 253);
+      } */
+
+      #guide {
+        width: 180px;
+        text-align: center;
+        bottom: 10%;
+        position: fixed;
+        left: calc(50% - 90px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="camera">
+      <!-- <canvas id="camera--sensor" display="none"></canvas> -->
+      <video id="camera--view"></video>
+      <img src="//:0" alt="" id="camera--output" />
+      <canvas id="rect"></canvas>
+      <button onclick="takePic();" id="camera--trigger" type="button">
+        사진촬영
+      </button>
+      <span id="guide">대상을 사각형 안에 위치해 주세요</span>
+    </div>
+
+    <script>
+      // if (location.protocol != "https:") {
+      //   window.location = "https://" + location.host + location.pathname;
+      // }
+      
+      let constraints = {
+        video: {facingMode: { exact: "environment" }},
+        audio: false,
+      };
+      const cameraView = document.getElementById("camera--view");
+      const cameraOutput = document.querySelector("#camera--output");
+      // const cameraSensor = document.querySelector("#camera--sensor");
+      const cameraTrigger = document.querySelector("#camera--trigger");
+      const rect = document.getElementById("rect");
+
+      navigator.permissions
+        .query({ name: "camera" })
+        .then((permissionObj) => {
+          console.log(permissionObj);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then((stream) => {
+          if ("srcObject" in cameraView) {
+            cameraView.srcObject = stream;
+          } else {
+            cameraView.src = window.URL.createObjectURL(stream);
+          }
+          cameraView.onloadedmetadata = function (e) {
+            cameraView.play();
+          };
+          const h = cameraView.clientHeight;
+          const w = cameraView.clientWidth;
+
+          rect.style.width = `${w * 0.6}px`;
+          rect.style.height = `${w * 0.6 * 1.414}px`;
+          rect.style.transform =
+            "translate(" + w * 0.2 + "px," + h * 0.2 + "px)";
+          console.log(rect.clientWidth, rect.clientHeight);
+        })
+        .catch(function (err) {
+          console.log(err.name + ": " + err.message);
+        });
+
+      // navigator.mediaDevices
+      //   .enumerateDevices()
+      //   .then((devices) => {
+      //     var videoDevices = [0, 0];
+      //     var videoDeviceIndex = 0;
+      //     devices.forEach(function (device) {
+      // console.log(
+      //   device.kind + ": " + device.label + " id = " + device.deviceId
+      // );
+      // if (device.kind == "videoinput") {
+      //   videoDevices[videoDeviceIndex++] = device.deviceId;
+      // }
+      //     console.log(device);
+      //   });
+
+      //   return navigator.mediaDevices.getUserMedia(constraints);
+      // })
+      // .then((stream) => {
+      // if (cameraView.mozSrcObject !== undefined) {
+      //   cameraView.mozSrcObject = stream;
+      // } else if (cameraView.srcObject !== undefined) {
+      //   cameraView.srcObject = stream;
+      // } else {
+      //   cameraView.src = stream;
+      // }
+      // console.log(stream);
+      // if ("srcObject" in cameraView) {
+      //   cameraView.srcObject = stream;
+      // } else {
+      //   cameraView.src = URL.createObjectURL(stream);
+      // }
+      // cameraView.onloadedmetadata = function(e){
+      //   cameraView.play();
+      // }
+      // cameraView.play();
+      // const h = cameraView.clientHeight;
+      // const w = cameraView.clientWidth;
+
+      // rect.style.width = `${w * 0.5}px`;
+      // rect.style.height = `${w * 0.5 * 1.414}px`;
+      // rect.style.transform =
+      //   "translate(" + w * 0.3 + "px," + h * 0.1 + "px)";
+      // console.log(rect.clientWidth, rect.clientHeight);
+      // rect.style.transform = "translateY(" + h * 0.01 + "px)";
+      // rect.style.left = "calc(50% - " + w * 0.35 * 0.5 + "px)";
+      // })
+      // .catch((e) => console.error(e));
+      // navigator.mediaDevices
+      //   .getUserMedia(constraints)
+      //   .then(function (stream) {
+      //     if (window.webkitURL) {
+      //       cameraView.src = window.webkitURL.createObjectURL(stream);
+      //       // localMediaStream = stream;
+      //     } else if (cameraView.mozSrcObject !== undefined) {
+      //       cameraView.mozSrcObject = stream;
+      //     } else if (cameraView.srcObject !== undefined) {
+      //       cameraView.srcObject = stream;
+      //     } else {
+      //       cameraView.src = stream;
+      //     }
+      //     track = stream.getTracks();
+      //     console.log(track);
+      //     cameraView.onloadedmetadata = function (e) {
+      //       cameraView.play();
+      //     };
+      //     const h = cameraView.clientHeight;
+      //     const w = cameraView.clientWidth;
+
+      //     rect.style.width = `${w * 0.35}px`;
+      //     rect.style.height = `${w * 0.35 * 1.414}px`;
+      //     rect.style.transform =
+      //       "translate(" + w * 0.3 + "px," + h * 0.1 + "px)";
+      //     console.log(rect.clientWidth, rect.clientHeight);
+      //   })
+
+      // rect.style.transform = "translateY(" + h * 0.01 + "px)";
+      // rect.style.left = "calc(50% - " + w * 0.35 * 0.5 + "px)";
+
+      // .catch(function (error) {
+      //   console.error("error", error);
+      // });
+
+      function takePic() {
+        const h = cameraView.clientHeight;
+        const w = cameraView.clientWidth;
+        var vw = cameraView.videoWidth;
+        var vh = cameraView.videoHeight;
+        var canvas = document.createElement("canvas");
+        canvas.width = rect.clientWidth;
+        canvas.height = rect.clientHeight;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(
+          cameraView,
+          vw * 0.2,
+          vh * 0.2,
+          vw * 0.6,
+          vw * 0.6 * 1.414,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+        cameraOutput.style.display = "none";
+        cameraOutput.src = canvas.toDataURL("image/webp");
+        console.log(cameraOutput.src);
+
+        // cameraView.setAttribute("width", `${rect.clientWidth}`);
+        // cameraOutput.setAttribute("height", `${rect.clientHeight}`);
+        // cameraOutput.setAttribute("type", "hidden");
+        // output.style.width = rect.clientWidth;
+        // output.style.height = rect.clientHeight;
+        // console.log(rect.clientWidth,rect.clientHeight);
+        // const h = cameraView.clientHeight;
+        // const w = cameraView.clientWidth;
+        // cameraOutput
+        //   .getContext("2d")
+        //   .drawImage(
+        //     cameraView,
+        //     w * 0.3,
+        //     h * 0.05,
+        //     w * 0.35,
+        //     w * 0.35 * 1.414,
+        //     0,
+        //     0,
+        //     rect.clientWidth,
+        //     rect.clientHeight
+        //   );
+        //  = output.toDataURL("image/webp");
+
+        // cameraSensor.style.width = rect.style.width;
+        // cameraSensor.style.height = rect.style.height;
+        // cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+        // cameraOutput.src = cameraOutput.toDataURL("image/webp");
+        // console.log(cameraOutput.src);
+      }
+      // cameraTrigger.addEventListener("click", takePic);
+      //촬영 버튼 클릭
+      // cameraTrigger.addEventListener("click", function () {
+      //   cameraSensor.style.width = rect.clientWidth;
+      //   cameraSensor.style.height = rect.clientHeight;
+      //   cameraSensor.getContext("2d").drawImage(rect, 0, 0);
+      //   cameraOutput.src = cameraSensor.toDataURL("image/webp");
+      //   cameraOutput.classList.add("taken");
+      //   console.log(cameraSensor.src);
+      // });
+
+      // 페이지가 로드되면 함수 실행
+      // window.addEventListener("load", cameraStart, false);
+      // window.onload = function () {
+      //   var canvas = document.getElementById("rect");
+      //   if (canvas.getContext) {
+      //     var draw = canvas.getContext("2d");
+      //     //rect(왼쪽위 x, 왼쪽위 y, 가로크기, 세로크기)
+      //     draw.strokeRect(10, 10, w* 0.5, h * 0.5);
+      //     draw.lineWidth = 5;
+      //     draw.strokeStyle = "green";
+      //     //fill : 채우기
+      //     draw.fill();
+      //     //stroke : 선그리기
+      //     draw.stroke();
+      //   }
+      // };
+      // cameraView.addEventListener(
+      //   "load",
+      //   function () {
+      //     // var offset = 0;
+      //     // var ctx = canvas.getContext("2d");
+      //     // //rect(왼쪽위 x, 왼쪽위 y, 가로크기, 세로크기)
+      //     // // 사업자등록증 비율 1:1.414
+      //     // ctx.clearRect(0, 0, w * 0.2, h * 0.3);
+      //     // ctx.setLineDash([4, 2]);
+      //     // ctx.lineDashOffset = -offset;
+      //     // // ctx.strokeRect(w*0.015,5, w * 0.12, h * 0.16968);
+      //     // ctx.restore();
+      //   },
+      //   false
+      // );
+    </script>
+  </body>
+</html>
