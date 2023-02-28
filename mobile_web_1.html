@@ -145,10 +145,10 @@
           const h = cameraView.clientHeight;
           const w = cameraView.clientWidth;
 
-          rect.style.width = `${w * 0.5}px`;
-          rect.style.height = `${w * 0.5 * 1.414}px`;
+          rect.style.width = `${w * 0.6}px`;
+          rect.style.height = `${w * 0.6 * 1.414}px`;
           rect.style.transform =
-            "translate(" + w * 0.3 + "px," + h * 0.1 + "px)";
+            "translate(" + w * 0.3 + "px," + h * 0.2 + "px)";
           console.log(rect.clientWidth, rect.clientHeight);
         })
         .catch(function (err) {
@@ -249,9 +249,9 @@
         ctx.drawImage(
           cameraView,
           vw * 0.3,
-          vh * 0.1,
-          vw * 0.5,
-          vw * 0.5 * 1.414,
+          vh * 0.2,
+          vw * 0.6,
+          vw * 0.6 * 1.414,
           0,
           0,
           canvas.width,
