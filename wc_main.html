@@ -112,9 +112,9 @@
       // if (location.protocol != "https:") {
       //   window.location = "https://" + location.host + location.pathname;
       // }
-      
+
       let constraints = {
-        video: {facingMode: { exact: "environment" }},
+        video: { facingMode: { exact: "environment" } },
         audio: false,
       };
       const cameraView = document.getElementById("camera--view");
@@ -149,7 +149,7 @@
           rect.style.height = `${w * 0.6 * 1.414}px`;
           rect.style.transform =
             "translate(" + w * 0.2 + "px," + h * 0.2 + "px)";
-          console.log(rect.clientWidth, rect.clientHeight);
+          console.log(cameraView.videoWidth + ":" + cameraView.videoHeight);
         })
         .catch(function (err) {
           console.log(err.name + ": " + err.message);
@@ -260,6 +260,16 @@
         cameraOutput.style.display = "none";
         cameraOutput.src = canvas.toDataURL("image/webp");
         console.log(cameraOutput.src);
+        console.log(
+          "x :" +
+            vw * 0.2 +
+            " y :" +
+            vh * 0.2 +
+            " width: " +
+            canvas.width +
+            " height: " +
+            canvas.height
+        );
 
         // cameraView.setAttribute("width", `${rect.clientWidth}`);
         // cameraOutput.setAttribute("height", `${rect.clientHeight}`);
