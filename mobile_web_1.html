@@ -114,7 +114,7 @@
       // }
       
       let constraints = {
-        video: true,
+        video: {facingMode: { exact: "environment" }},
         audio: false,
       };
       const cameraView = document.getElementById("camera--view");
