@@ -138,18 +138,18 @@
             console.log(vw, vh);
             cameraView.style.clip =
               "rect(" +
-              vh * 0.2 +
+              h * 0.2 +
               "px, " +
-              vw * 0.8 +
+              w * 0.8 +
               "px, " +
-              (vh * 0.2 + vw * 0.6 * 1.414) +
+              (h * 0.2 + w * 0.6 * 1.414) +
               "px, " +
-              vw * 0.2 +
+              w * 0.2 +
               "px)";
-            rect.style.width = `${vw * 0.6}px`;
-            rect.style.height = `${vw * 0.6 * 1.414}px`;
+            rect.style.width = `${w * 0.6}px`;
+            rect.style.height = `${w * 0.6 * 1.414}px`;
             rect.style.transform =
-              "translate(" + vw * 0.2 + "px," + vh * 0.2 + "px)";
+              "translate(" + w * 0.2 + "px," + h * 0.2 + "px)";
             cameraView.play();
           };
           console.log(cameraView.style.clip);
