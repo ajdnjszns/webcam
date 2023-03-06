@@ -47,9 +47,9 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: 80%;
         z-index: -1;
-        object-fit: contain;
+        object-fit: cover;
         /* transform: scaleX(-1); */
         filter: FlipH;
       }
@@ -135,16 +135,16 @@
           };
           const w = cameraView.clientWidth;
           const h = cameraView.clientHeight;
-          // cameraView.style.clip =
-          //   "rect(" +
-          //   h * 0.2 +
-          //   "px, " +
-          //   w * 0.8 +
-          //   "px, " +
-          //   (h * 0.2 + w * 0.6 * 1.414) +
-          //   "px, " +
-          //   w * 0.2 +
-          //   "px)";
+          cameraView.style.clip =
+            "rect(" +
+            h * 0.2 +
+            "px, " +
+            w * 0.8 +
+            "px, " +
+            (h * 0.2 + w * 0.6 * 1.414) +
+            "px, " +
+            w * 0.2 +
+            "px)";
           rect.style.width = `${w * 0.6}px`;
           rect.style.height = `${w * 0.6 * 1.414}px`;
           rect.style.transform =
