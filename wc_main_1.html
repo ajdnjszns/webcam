@@ -37,15 +37,16 @@
         position: absolute;
         top: 0;
         left: 0;
-        /* width: 100%; */
+        width: 100%;
         z-index: -1;
+        object-fit: contain;
       }
       #camera--view {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        /* height: 100%; */
         z-index: -1;
         object-fit: contain;
         /* transform: scaleX(-1); */
@@ -60,11 +61,6 @@
         left: 0;
         /* transform: translateX(calc(67%)); */
       }
-      #cover {
-        top: 0;
-        left: 0;
-      }
-
       #camera--trigger {
         width: 180px;
         color: white;
@@ -120,7 +116,7 @@
         },
         audio: false,
       };
-      const camera = document.getElementById("camera");
+      // const camera = document.getElementById("camera");
       const cameraView = document.getElementById("camera--view");
       cameraView.setAttribute("playsinline", true);
       const cameraOutput = document.querySelector("#camera--output");
@@ -128,33 +124,37 @@
       const rect = document.getElementById("rect");
 
       navigator.mediaDevices
-        .getUserMedia(constraints)
+      .getUserMedia(constraints)
         .then((stream) => {
-          cameraView.onloadedmetadata = () => {
+          if ("srcObject" in cameraView) {
+            cameraView.srcObject = stream;
+          } else {
+            cameraView.src = window.URL.createObjectURL(stream);
+          }
+          cameraView.onloadedmetadata = function (e) {
             cameraView.play();
           };
           var vw = cameraView.clientWidth;
           var vh = cameraView.clientHeight;
-          // cameraView.style.clip =
-          //   "rect(" +
-          //   vh * 0.2 +
-          //   "px, " +
-          //   vw * 0.8 +
-          //   "px, " +
-          //   (vh * 0.1 + vw * 0.6 * 1.414) +
-          //   "px, " +
-          //   vw * 0.2 +
-          //   "px)";
+          cameraView.style.clip =
+            "rect(" +
+            vh * 0.2 +
+            "px, " +
+            vw * 0.8 +
+            "px, " +
+            (vh * 0.1 + vw * 0.6 * 1.414) +
+            "px, " +
+            vw * 0.2 +
+            "px)";
           rect.style.width = `${vw * 0.6}px`;
           rect.style.height = `${vw * 0.6 * 1.414}px`;
           rect.style.transform =
             "translate(" + vw * 0.2 + "px," + vh * 0.2 + "px)";
-          cameraView.srcObject = stream;
+          
           // console.log(cameraView.videoWidth)
           console.log(cameraView.style.clip);
           // console.log(vw, vh);
           // cameraView.style.clip = "rect("+ 20 +"px," + 200 +"px," + 20 +"px," +200+ "px)"
-          console.log();
          
         })
         .catch(function (err) {
@@ -167,7 +167,7 @@
         var vw = cameraView.videoWidth;
         var vh = cameraView.videoHeight;
       
-        html2canvas(camera).then((canvas) => {
+        html2canvas(cameraView).then((canvas) => {
           
           cameraOutput.src = canvas.toDataURL("image/webp");
         });
