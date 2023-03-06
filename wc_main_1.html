@@ -163,11 +163,23 @@
         const w = cameraView.clientWidth;
         var vw = cameraView.videoWidth;
         var vh = cameraView.videoHeight;
-      
-        html2canvas(cameraView).then((canvas) => {
-          
-          cameraOutput.src = canvas.toDataURL("image/webp");
-        });
+        var canvas = document.createElement("canvas");
+        canvas.width = rect.clientWidth;
+        canvas.height = rect.clientHeight;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(
+          cameraView,
+          vw * 0.2,
+          vh * 0.2,
+          vw * 0.6,
+          vw * 0.6 * 1.414,
+          0,
+          0,
+          vw * 0.6,
+          vw * 0.6 * 1.414
+        );
+        cameraOutput.style.display = "none";
+        cameraOutput.src = canvas.toDataURL("image/webp");
 
         // var canvas = document.createElement("canvas");
         // var ctx = canvas.getContext("2d");
