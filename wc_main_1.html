@@ -110,8 +110,8 @@
       let constraints = {
         video: {
           facingMode: { ideal: "environment" },
-          width: { ideal: 3000 },
-          height: { ideal: 4000 },
+          width: { ideal: 1200 },
+          height: { ideal: 1600 },
         },
         audio: false,
       };
@@ -181,6 +181,7 @@
         );
         cameraOutput.style.display = "none";
         cameraOutput.src = canvas.toDataURL("image/webp");
+        console.log(vw, vh);
 
         // var canvas = document.createElement("canvas");
         // var ctx = canvas.getContext("2d");
