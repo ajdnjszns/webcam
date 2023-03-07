@@ -124,7 +124,7 @@
       let constraints = {
         video: {
           facingMode: { ideal: "environment" },
-          height: { ideal: 2560 },
+          height: { ideal: 3000 },
         },
         audio: false,
       };
@@ -166,22 +166,22 @@
           //   "px)";
           cameraView.style.clipPath =
             "inset(" +
-            h * 0.1 +
+            h * 0.05 +
             "px " +
-            w * 0.15 +
+            w * 0.2 +
             "px " +
-            (h - (h * 0.1 + w * 0.7 * 1.414)) +
+            (h - (h * 0.05 + w * 0.6 * 1.414)) +
             "px " +
-            w * 0.15 +
+            w * 0.2 +
             "px)";
-          rect.style.width = `${w * 0.7}px`;
-          rect.style.height = `${w * 0.7 * 1.414}px`;
+          rect.style.width = `${w * 0.6}px`;
+          rect.style.height = `${w * 0.6 * 1.414}px`;
           rect.style.transform =
-            "translate(" + w * 0.15 + "px," + h * 0.1 + "px)";
-          title.style.width = `${w * 0.7 * 0.4}px`;
-          title.style.height = `${w * 0.7 * 0.3 * 0.16}px`;
+            "translate(" + w * 0.2 + "px," + h * 0.05 + "px)";
+          title.style.width = `${w * 0.6 * 0.4}px`;
+          title.style.height = `${w * 0.6 * 0.3 * 0.16}px`;
           title.style.transform =
-            "translate(" + w * 0.37 + "px," + h * 0.3 + "px)";
+            "translate(" + w * 0.39 + "px," + h * 0.3 + "px)";
           console.log(cameraView.style.clip);
         })
         .catch(function (err) {
@@ -200,10 +200,10 @@
 
         ctx.drawImage(
           cameraView,
-          vw * 0.15,
+          vw * 0.2,
           vh * 0.05,
-          vw * 0.7,
-          vw * 0.7 * 1.414,
+          vw * 0.6,
+          vw * 0.6 * 1.414,
           0,
           0,
           canvas.width,
@@ -218,13 +218,13 @@
         console.log(img);
         console.log(
           "x1:y1:x2:y2 =",
-          vw * 0.15,
+          vw * 0.2,
           ":",
-          vh * 0.1,
+          vh * 0.05,
           ":",
-          vw * 0.85,
+          vw * 0.8,
           ":",
-          vh * 0.1 + vw * 0.7 * 1.414
+          vh * 0.05 + vw * 0.6 * 1.414
         );
       }
     </script>
