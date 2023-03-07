@@ -152,7 +152,10 @@
             cameraView.play();
           };
           const w = cameraView.clientWidth;
-          const h = cameraView.clientHeight;
+          const h = cameraView.offsetHeight;
+          const wh = cameraView.getBoundingClientRect()
+          // const bt = cameraView.style.bottom
+          console.log(wh.bottom)
           // cameraView.style.clip =
           //   "rect(" +
           //   h * 0.1 +
@@ -169,7 +172,7 @@
             "px " +
             w * 0.2 +
             "px " +
-            (h - (h * 0.1 + w * 0.6 * 1.414)) +
+            (h+wh.bottom - (h * 0.1 + w * 0.6 * 1.414)) +
             "px)";
           // cameraView.style.clipPath = "inset(10% 20% 0 20%)"
           console.log(w, h);
