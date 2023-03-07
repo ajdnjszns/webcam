@@ -9,6 +9,11 @@
     />
     <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge" /> -->
     <title>Camera Web App</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.js"
+      integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
       /* html,
@@ -118,8 +123,8 @@
       let constraints = {
         video: {
           facingMode: { ideal: "environment" },
-          width: { ideal: 3000 },
-          height: { ideal: 4000 },
+          width: { ideal: 1500 },
+          height: { ideal: 2000 },
         },
         audio: false,
       };
@@ -179,10 +184,10 @@
         var vw = cameraView.videoWidth;
         var vh = cameraView.videoHeight;
         var canvas = document.createElement("canvas");
-
+        var ctx = canvas.getContext("2d");
         canvas.width = rect.clientWidth;
         canvas.height = rect.clientHeight;
-        var ctx = canvas.getContext("2d");
+
         ctx.drawImage(
           cameraView,
           vw * 0.15,
@@ -194,9 +199,12 @@
           canvas.width,
           canvas.height
         );
-        cameraOutput.style.display = "none";
-        cameraOutput.src = canvas.toDataURL("image/webp");
+
+        var dpr = window.devicePixelRatio;
+        console.log(dpr);
         var img = canvas.toDataURL("image/webp", 1);
+        cameraOutput.style.display = "none"
+        cameraOutput.src = canvas.toDataURL("image/webp");
         console.log(img);
         console.log(
           "x1:y1:x2:y2 =",
@@ -208,7 +216,6 @@
           ":",
           vh * 0.1 + vw * 0.7 * 1.414
         );
-        
       }
     </script>
   </body>
