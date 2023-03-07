@@ -118,8 +118,8 @@
       let constraints = {
         video: {
           facingMode: { ideal: "environment" },
-          width: { max: 3000 },
-          height: { max: 4000 },
+          width: { ideal: 3000 },
+          height: { ideal: 4000 },
         },
         audio: false,
       };
@@ -208,36 +208,7 @@
           ":",
           vh * 0.1 + vw * 0.7 * 1.414
         );
-        // var canvas = document.createElement("canvas");
-        // var ctx = canvas.getContext("2d");
-        // canvas.width = rect.clientWidth;
-        // canvas.height = rect.clientHeight;
-        // console.log(h,w)
-        // ctx.drawImage(
-        //   cameraView,
-        //   vw * 0.2,
-        //   vh * 0.1,
-        //   vw * 0.6,
-        //   vw * 0.6 * 1.414,
-        //   0,
-        //   0,
-        //   canvas.width,
-        //   canvas.height
-        // );
-        // cameraOutput.style.display = "none";
-        // cameraOutput.src = canvas.toDataURL("image/webp");
-        // console.log(vw, vh);
-        // console.log(cameraOutput.src);
-        // console.log(
-        //   "x: " +
-        //     vw * 0.2 +
-        //     " y: " +
-        //     vh * 0.2 +
-        //     " width: " +
-        //     vw * 0.6 +
-        //     " height: " +
-        //     vw * 0.6 * 1.414
-        // );
+        
       }
     </script>
   </body>
