@@ -169,8 +169,10 @@
             "px " +
             w * 0.2 +
             "px " +
-            (0.9 * h - w * 0.6 * 1.414) +
+            (h - (0.1 * h + w * 0.6 * 1.414)) +
             "px)";
+          console.log(w, h)
+          console.log(cameraView.style.clipPath)
           rect.style.width = `${w * 0.6}px`;
           rect.style.height = `${w * 0.6 * 1.414}px`;
           rect.style.transform =
@@ -179,7 +181,6 @@
           title.style.height = `${w * 0.6 * 0.3 * 0.16}px`;
           title.style.transform =
             "translate(" + w * 0.39 + "px," + h * 0.35 + "px)";
-          console.log(cameraView.style.clip);
         })
         .catch(function (err) {
           console.log(err.name + ": " + err.message);
