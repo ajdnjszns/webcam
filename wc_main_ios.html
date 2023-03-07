@@ -127,7 +127,7 @@
         },
         audio: false,
       };
-      // const camera = document.getElementById("camera");
+      const camera = document.getElementById("camera");
       const cameraView = document.getElementById("camera--view");
       cameraView.setAttribute("playsinline", true);
       const cameraOutput = document.querySelector("#camera--output");
@@ -169,7 +169,7 @@
             "px " +
             w * 0.2 +
             "px " +
-            (0.1 * h + w * 0.6 * 1.414) +
+            (0.1 * h) +
             "px)";
           console.log(w, h);
           console.log(0.1 * h + w * 0.6 * 1.414)
