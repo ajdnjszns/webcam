@@ -163,15 +163,15 @@
           //   "px, " +
           //   w * 0.2 +
           //   "px)";
-          cameraView.style.clipPath =
-            "inset(" +
-            h * 0.1 +
-            "px " +
-            w * 0.2 +
-            "px " +
-            (w * 0.3 * 1.414) +
-            "px)";
-          // cameraView.style.clipPath = "inset(10% 20% 20%)"
+          // cameraView.style.clipPath =
+          //   "inset(" +
+          //   h * 0.1 +
+          //   "px " +
+          //   w * 0.2 +
+          //   "px " +
+          //   (w * 0.2 * 1.414) +
+          //   "px)";
+          cameraView.style.clipPath = "inset(0 20% 0 20%)"
           console.log(w, h);
           console.log(0.1 * h + w * 0.6 * 1.414)
           console.log(cameraView.style.clipPath);
