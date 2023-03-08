@@ -7,37 +7,13 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
     />
-    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge" /> -->
     <title>Camera Web App</title>
     <style>
-      /* html,
-      body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-      }
-
-      #header {
-        position: absolute;
-        top: 50px;
-        left: 50%;
-        z-index: 999;
-        color: white;
-        text-align: center;
-        transform: translate(-50%, -50%);
-      }
-
-      #header > p {
-        font-size: 0.9em;
-      } */
-
       #camera {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        /* height:100%; */
         z-index: -1;
         object-fit: contain;
       }
@@ -46,26 +22,17 @@
         top: 0;
         left: 0;
         width: 100%;
-        /* height: 100%; */
         z-index: -1;
         object-fit: contain;
-        /* bottom: 50%; */
-        /* transform: scaleX(-1); */
         filter: FlipH;
       }
       #rect {
-        /* width: 100px;
-        height: 100px; */
         position: absolute;
         border: 1px solid red;
-        /* transform: translateX(calc(67%)); */
       }
       #title {
-        /* width: 100px;
-        height: 100px; */
         position: absolute;
         border: 1px solid red;
-        /* transform: translateX(calc(67%)); */
       }
       #camera--trigger {
         width: 180px;
@@ -86,12 +53,6 @@
         position: relative;
       }
 
-      /* .taken {
-        height: 140px !important;
-        width: 220px !important;
-        border: solid 2px rgb(121, 200, 253);
-      } */
-
       #guide {
         width: 180px;
         text-align: center;
@@ -102,7 +63,6 @@
     </style>
   </head>
   <body>
-    <!-- <div id="camera"> -->
     <div id="camera">
       <video id="camera--view"></video>
       <img src="//:0" alt="" id="camera--output" />
@@ -147,7 +107,7 @@
             console.log("px =", w, ":", h);
             console.log("pxRatio: ", w / h);
 
-            //a4용지 비율만큼 화면 자르기 
+            //a4용지 비율만큼 화면 자르기
             cameraView.style.clipPath =
               "inset(" +
               h * 0.1 +
@@ -156,7 +116,7 @@
               "px " +
               (h - (0.1 * h + 0.6 * w * 1.414)) +
               "px)";
-            
+
             console.log(cameraView.style.clipPath);
             //가이드 라인 rect
             rect.style.width = `${w * 0.6}px`;
@@ -174,7 +134,7 @@
         .catch(function (err) {
           console.log(err.name + ": " + err.message);
         });
-      
+
       function takePic() {
         const h = cameraView.clientHeight;
         const w = cameraView.clientWidth;
@@ -207,9 +167,9 @@
         var y1 = vh * 0.1;
         var x2 = vw * 0.8;
         var y2 = vh * 0.1 + vw * 0.6 * 1.414;
-        
+
         console.log("x1:y1:x2:y2 =", x1, ":", y1, ":", x2, ":", y2);
-        console.log(`width: ${x2- x1}px, height: ${y2 - y1}px`);
+        console.log(`width: ${x2 - x1}px, height: ${y2 - y1}px`);
       }
     </script>
   </body>
