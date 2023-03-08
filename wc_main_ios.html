@@ -124,12 +124,12 @@
       };
       const camera = document.getElementById("camera");
       const cameraView = document.getElementById("camera--view");
+      //ios에서 불러올 시 전체화면 처리 방지
       cameraView.setAttribute("playsinline", true);
       const cameraOutput = document.querySelector("#camera--output");
       const cameraTrigger = document.querySelector("#camera--trigger");
       const rect = document.getElementById("rect");
       const title = document.getElementById("title");
-      // let whRatio = null;
 
       navigator.mediaDevices
         .getUserMedia(constraints)
@@ -139,7 +139,6 @@
           cameraView.onloadedmetadata = function (e) {
             var vw = cameraView.videoWidth;
             var vh = cameraView.videoHeight;
-            // whRatio = vw/vh
             console.log("video = ", vw, ":", vh);
             console.log("vRatio: ", vw / vh);
             const wh = cameraView.getBoundingClientRect();
@@ -147,6 +146,8 @@
             const h = wh.height;
             console.log("px =", w, ":", h);
             console.log("pxRatio: ", w / h);
+
+            //a4용지 비율만큼 화면 자르기 
             cameraView.style.clipPath =
               "inset(" +
               h * 0.1 +
@@ -155,11 +156,14 @@
               "px " +
               (h - (0.1 * h + 0.6 * w * 1.414)) +
               "px)";
+            
             console.log(cameraView.style.clipPath);
+            //가이드 라인 rect
             rect.style.width = `${w * 0.6}px`;
             rect.style.height = `${w * 0.6 * 1.414}px`;
             rect.style.transform =
               "translate(" + w * 0.2 + "px," + h * 0.1 + "px)";
+            //사업자등록증 타이틀 rect
             title.style.width = `${w * 0.6 * 0.4}px`;
             title.style.height = `${w * 0.6 * 0.3 * 0.16}px`;
             title.style.transform =
@@ -170,7 +174,7 @@
         .catch(function (err) {
           console.log(err.name + ": " + err.message);
         });
-
+      
       function takePic() {
         const h = cameraView.clientHeight;
         const w = cameraView.clientWidth;
@@ -181,6 +185,7 @@
         canvas.width = rect.clientWidth;
         canvas.height = rect.clientHeight;
 
+        //crop된 부분 캡쳐
         ctx.drawImage(
           cameraView,
           vw * 0.2,
@@ -196,10 +201,13 @@
         var img = canvas.toDataURL("image/webp", 1);
         cameraOutput.style.display = "none";
         cameraOutput.src = canvas.toDataURL("image/webp");
+
+        //crop된 rect 좌표(x1, y1, x2, y2)
         var x1 = vw * 0.2;
         var y1 = vh * 0.1;
         var x2 = vw * 0.8;
         var y2 = vh * 0.1 + vw * 0.6 * 1.414;
+
         console.log("x1:y1:x2:y2 =", x1, ":", y1, ":", x2, ":", y2);
         console.log(`width: ${x2- x1}px, height: ${y2 - y1}px`);
       }
