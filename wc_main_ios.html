@@ -55,6 +55,7 @@
         /* height: 80%; */
         z-index: -1;
         object-fit: contain;
+        bottom: 50%;
         /* transform: scaleX(-1); */
         filter: FlipH;
       }
@@ -151,9 +152,10 @@
 
             cameraView.play();
           };
-          const w = cameraView.clientWidth;
-          const h = cameraView.offsetHeight;
           const wh = cameraView.getBoundingClientRect()
+          const w = wh.width
+          const h = wh.height;
+          
           // const bt = cameraView.style.bottom
           
           console.log(wh)
@@ -173,7 +175,7 @@
             "px " +
             w * 0.2 +
             "px " +
-            wh.bottom +
+            (2*h - (0.1*h + 0.6*w*1.414)) +
             "px)";
           // cameraView.style.clipPath = "inset(10% 20% 0 20%)"
           console.log(w, h);
