@@ -9,12 +9,6 @@
     />
     <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge" /> -->
     <title>Camera Web App</title>
-    <script
-      src="https://code.jquery.com/jquery-3.6.3.js"
-      integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
       /* html,
       body {
@@ -146,13 +140,13 @@
             var vw = cameraView.videoWidth;
             var vh = cameraView.videoHeight;
             // whRatio = vw/vh
-            console.log("video = ", vw,":",vh)
-            console.log("vRatio: ", vw/vh);
+            console.log("video = ", vw, ":", vh);
+            console.log("vRatio: ", vw / vh);
             const wh = cameraView.getBoundingClientRect();
             const w = wh.width;
             const h = wh.height;
-            console.log("px =", w,":", h)
-            console.log("pxRatio: ", w/h);
+            console.log("px =", w, ":", h);
+            console.log("pxRatio: ", w / h);
             cameraView.style.clipPath =
               "inset(" +
               h * 0.1 +
@@ -202,16 +196,12 @@
         var img = canvas.toDataURL("image/webp", 1);
         cameraOutput.style.display = "none";
         cameraOutput.src = canvas.toDataURL("image/webp");
-        console.log(
-          "x1:y1:x2:y2 =",
-          vw * 0.2,
-          ":",
-          vh * 0.1,
-          ":",
-          vw * 0.8,
-          ":",
-          vh * 0.1 + vw * 0.6 * 1.414
-        );
+        var x1 = vw * 0.2;
+        var y1 = vh * 0.1;
+        var x2 = vw * 0.8;
+        var y2 = vh * 0.1 + vw * 0.6 * 1.414;
+        console.log("x1:y1:x2:y2 =", x1, ":", y1, ":", x2, ":", y2);
+        console.log(`width: ${x2- x1}px, height: ${y2 - y1}px`);
       }
     </script>
   </body>
