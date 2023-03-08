@@ -189,6 +189,7 @@
           title.style.height = `${w * 0.6 * 0.3 * 0.16}px`;
           title.style.transform =
             "translate(" + w * 0.39 + "px," + h * 0.3 + "px)";
+          console.log(rect.getBoundingClientRect())
         })
         .catch(function (err) {
           console.log(err.name + ": " + err.message);
